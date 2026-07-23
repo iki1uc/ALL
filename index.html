@@ -2,77 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL381 · RUN7 · ASCII‑ANIMATION</title>
+<title>GEO‑MINI‑ANIMATION · ALL3E · iki1uc</title>
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
-pre { font-size:15px; line-height:17px; }
+pre { font-size:16px; line-height:18px; }
 </style>
 </head>
 <body>
 
-<h2>ALL381 · RUN7 · ASCII‑ANIMATION</h2>
-<pre id="screen">START…</pre>
+<h2>GEO‑MINI‑ANIMATION · ALL3E</h2>
+<pre id="geo">START…</pre>
 
 <script>
-let frame = 0;
+let f = 0;
 
 function anim(){
-    frame++;
+    f++;
 
-    // GEO 3D rotation effect
+    const p = (n)=> (f % n ? "●" : "○");
+
     const geo = `
-GEO‑3D (rot ${frame})
-X───${frame%2? "●":"○"}
-Y───${frame%3? "●":"○"}
-Z───${frame%4? "●":"○"}
-H───${frame%5? "●":"○"}
-B───${frame%6? "●":"○"}
-T───${frame%7? "●":"○"}
-M───${frame%8? "●":"○"}
+GEO‑SPACE (frame ${f})
+
+X‑Axis  ─── ${p(2)}
+Y‑Axis  ─── ${p(3)}
+Z‑Axis  ─── ${p(4)}
+
+H‑Axis  ─── ${p(5)}
+B‑Axis  ─── ${p(6)}
+T‑Axis  ─── ${p(7)}
+M‑Axis  ─── ${p(8)}
+
+ROTATION:
+${" ".repeat(f%10)}↻
+
+PULSE:
+${"● ".repeat((f%6)+2)}
+
+SHIFT:
+${" ".repeat((f%5))}●──○──●
 `;
 
-    // ORBIT spiral animation
-    const orbit = `
-ORBIT‑SPIRAL
-Angle: ${frame*7 % 360}°
-Path :
-${"●".repeat((frame%5)+1)}──○──${"●".repeat((frame%3)+1)}
-   ↘
-     ${"●".repeat((frame%4)+1)}──○──${"●".repeat((frame%2)+1)}
-`;
+    document.getElementById("geo").textContent = geo;
 
-    // VECTOR‑CUBE rotation
-    const cube = `
-VECTOR‑CUBE‑ROT
-+-------+
-| ${frame%2?"●":"○"}   ${frame%3?"●":"○"} |
-|   ${frame%4?"●":"○"}   |
-| ${frame%5?"●":"○"}   ${frame%6?"●":"○"} |
-+-------+
-rot: ${frame}
-`;
+    requestAnimationFrame(anim);
+}
 
-    // HYPERRAUM cloud pulse
-    const hyper = `
-HYPERRAUM‑CLOUD
-${"● ".repeat((frame%6)+3)}
- ${"● ".repeat((frame%5)+2)}
-  ${"● ".repeat((frame%4)+1)}
-`;
+anim();
+</script>
 
-    // AMIGA copperbars
-    const amiga = `
-AMIGA‑COPPERBARS
-${"█".repeat(20)}
-${"▓".repeat(20)}
-${"█".repeat(20)}
-${"▓".repeat(20)}
-`;
-
-    // ANIME sparks
-    const anime = `
-ANIME‑SPARKS
-${frame%2? "✦ ✧ ✦ ✧ ✦":"✧ ✦ ✧ ✦ ✧"}
-`;
-
-    document.getElementById("screen").textContent =
+</body>
+</html>
