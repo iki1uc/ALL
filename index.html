@@ -1,46 +1,67 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · RUN7 · VISUAL · GEO · ORBIT · VECTORCUBE</title>
-
+<title>ALL · RUN7 · 3E · 6E · 6D · GEO3D · ORBIT · VECTORCUBE · HYPERRAUM</title>
 <style>
-body { background:#000; color:#0f0; font-family:Consolas; padding:30px; }
-h1 { color:#6cf; }
-.block { background:#111; border:1px solid #333; padding:20px; margin:25px 0; border-radius:8px; }
-pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre-wrap; }
+body { margin:0; overflow:hidden; background:#000; }
 </style>
+</head>
+<body>
+<canvas id="c"></canvas>
 
 <script type="module">
-import { ALL_GEO_VISUAL } from "./ALL.geometry.js";
-import { ALL_ORBIT_VISUAL } from "./ALL.orbit.js";
-import { ALL_VECTORCUBE_VISUAL } from "./ALL.vectorcube.js";
-import { ALL_HYPERRAUM_VISUAL } from "./ALL.hyperraum.js";
-import { ALL_PIPELINE12_VISUAL } from "./ALL.pipeline12.js";
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js";
+import { GEO3D } from "./ALL.geo3d.js";
+import { ORBIT_ANIMATE } from "./ALL.orbit.animate.js";
+import { VECTORCUBE_ROTATE } from "./ALL.vectorcube.rotate.js";
+import { HYPERRAUM_RENDER } from "./ALL.hyperraum.render.js";
+import { ANIME_GLOW } from "./ALL.animeglow.js";
 
-async function start(){
-    const out = {
-        GEO: ALL_GEO_VISUAL(),
-        ORBIT: ALL_ORBIT_VISUAL(),
-        VECTORCUBE: ALL_VECTORCUBE_VISUAL(),
-        HYPERRAUM: ALL_HYPERRAUM_VISUAL(),
-        PIPELINE12: ALL_PIPELINE12_VISUAL()
-    };
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth,window.innerHeight);
 
-    document.getElementById("sys").innerText =
-        JSON.stringify(out, null, 2);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#000");
+
+const camera = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,100);
+camera.position.z = 5;
+
+// GEO 3D
+GEO3D(scene);
+
+// Cube
+const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color:"#0ff",wireframe:true})
+);
+scene.add(cube);
+
+// Hyperraum
+HYPERRAUM_RENDER(scene);
+
+// Orbit object
+const orb = new THREE.Mesh(
+    new THREE.SphereGeometry(0.1),
+    new THREE.MeshBasicMaterial({color:"#ff0"})
+);
+scene.add(orb);
+
+// Animations
+const orbitAnim = ORBIT_ANIMATE(orb);
+const cubeAnim = VECTORCUBE_ROTATE(cube);
+
+// Anime Glow
+const composer = ANIME_GLOW(renderer,scene,camera);
+
+function animate(){
+    orbitAnim();
+    cubeAnim();
+    composer.render();
+    requestAnimationFrame(animate);
 }
-start();
+animate();
 </script>
-</head>
-
-<body>
-
-<h1>ALL · RUN7 · VISUAL</h1>
-
-<div class="block">
-    <pre id="sys">Lade…</pre>
-</div>
-
 </body>
 </html>
