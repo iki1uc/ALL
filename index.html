@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · Master-Schaltung</title>
+<title>ALL · Master-Schaltung · 3×27 → 81</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
@@ -12,6 +12,7 @@ pre {
     background:#111;
     padding:20px;
     border-left:3px solid #6cf;
+    overflow-x:auto;
 }
 </style>
 
@@ -21,11 +22,12 @@ pre {
 
 <body>
 
-<h1>ALL · Master-Schaltung</h1>
+<h1>ALL · Master-Schaltung · Cube-Mind</h1>
 
 <pre id="status">Lade ALL…</pre>
 
 <script>
+// Deine RESPO-Liste
 const respo_list = [
     "RESPO_CORE_ROUTER",
     "RESPO_UI_STATUS",
@@ -39,8 +41,10 @@ const respo_list = [
     "RESPO_POSITION_USER"
 ];
 
-const result = ALL.compute(respo_list);
+// NEUE MASTER-FUNKTION
+const result = ALL.computeMaster(respo_list);
 
+// Ausgabe
 document.getElementById("status").innerText =
     JSON.stringify(result, null, 2);
 </script>
