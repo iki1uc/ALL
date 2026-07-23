@@ -13,7 +13,7 @@ class ALL_PORTAL {
 
             if(portal === "A") warp = i + 20;
             if(portal === "B") warp = i - 15;
-            if(portal === "C") warp = (i * GAM.gamma()) % 27;
+            if(portal === "C") warp = (i * 3.14) % 27; // γ∞-Warp
             if(portal === "D") warp = (i % 9) * 3 + (i % 3);
 
             warp = Math.abs(warp % 27);
