@@ -1,0 +1,9 @@
+export function ALL_PIPELINE12(){
+    const out = {
+        axis: [...Array(12).keys()],
+        flow: "ACTIVE"
+    };
+
+    ALL_RESPO.add("pipeline12", out);
+    return out;
+}
