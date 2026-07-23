@@ -1,62 +1,61 @@
-// 3×27 Stationen erzeugen
-buildStations(){
-    const stations = [];
-    for(let layer=0; layer<3; layer++){
-        const row = [];
-        for(let i=0; i<27; i++){
-            row.push({
-                id: `L${layer}-S${i}`,
-                amp: "gelb",
-                pct: Math.floor(Math.random()*100),
-                deg: Math.floor(Math.random()*33),
-                room: ["tmp-room","room","uroom","roomc"][i % 4]
-            });
-        }
-        stations.push(row);
-    }
-    return stations;
-}
+class ALL {
 
-// 81er Matrix erzeugen
-build81(){
-    const m81 = [];
-    for(let r=0; r<9; r++){
-        const row = [];
-        for(let c=0; c<9; c++){
-            row.push({
-                pos: r*9+c,
-                amp: ["rot","gelb","grün"][this.iqq(r,c)],
-                pct: Math.floor(Math.random()*100),
-                deg: Math.floor(Math.random()*33),
-                room: ["tmp-room","room","uroom","roomc"][this.iqq(r,c)]
-            });
-        }
-        m81.push(row);
-    }
-    return m81;
-}
+    // 27er-Bildung
+    build27(list){
+        return list.map((name, i)=>{
+            const score = (name.length * 7) % 100;
+            const deg   = (name.length * 13) % 360;
 
-// 379 Module sortieren
-sort379(list){
-    const sorted = [];
-    for(let i=0; i<379; i++){
-        sorted.push({
-            id: list[i] || `MOD-${i}`,
-            pos: i,
-            layer: Math.floor(i/27),
-            amp: ["rot","gelb","grün"][i % 3],
-            pct: Math.floor(Math.random()*100),
-            deg: Math.floor(Math.random()*33)
+            return {
+                id: i,
+                name,
+                score,
+                deg,
+                color: score > 70 ? "green" : score > 40 ? "yellow" : "red"
+            };
         });
     }
-    return sorted;
+
+    // 3×27-Bildung
+    build3x27(list){
+        const base = this.build27(list);
+        return [
+            base,
+            base.map(c => ({...c, score: (c.score * 2) % 100, color: c.score > 50 ? "green" : "yellow"})),
+            base.map(c => ({...c, score: (c.score * 3) % 100, color: c.score > 60 ? "green" : "red"}))
+        ];
+    }
+
+    // 81er-Cube-Mind
+    build81(list){
+        const out = [];
+        for(let r=0; r<9; r++){
+            const row = [];
+            for(let c=0; c<9; c++){
+                const idx = (r*9+c) % list.length;
+                const base = list[idx];
+
+                row.push({
+                    r, c,
+                    name: base.name,
+                    score: (base.score + r + c) % 100,
+                    deg: (base.deg + r*10 + c*5) % 360,
+                    color: base.color
+                });
+            }
+            out.push(row);
+        }
+        return out;
+    }
+
+    // Master-Schaltung
+    computeMaster(list){
+        const m27   = this.build27(list);
+        const m3x27 = this.build3x27(list);
+        const m81   = this.build81(m27);
+
+        return { m27, m3x27, m81 };
+    }
 }
 
-// Master-Ausgabe
-computeMaster(list){
-    return {
-        stations_3x27: this.buildStations(),
-        matrix_81: this.build81(),
-        modules_379: this.sort379(list)
-    };
-}
+window.ALL = new ALL();
