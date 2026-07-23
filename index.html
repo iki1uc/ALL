@@ -2,32 +2,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL3E · ASCII‑SCAN · iki1uc</title>
+<title>ALL3E · ASCII GEO · iki1uc</title>
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
-pre { font-size:14px; line-height:16px; }
+pre { font-size:15px; line-height:17px; }
 </style>
 </head>
 <body>
 
-<h2>ALL3E · ASCII‑SCAN</h2>
+<h2>ALL3E · GEO · ORBIT · VECTORCUBE · HYPERRAUM</h2>
 <pre id="out">SCAN…</pre>
 
 <script>
-function geoScan(){
+// GEO 3D ASCII
+function geo3d(){
 return `
 GEO‑3D
-X───●
-Y───●
-Z───●
-H───●
-B───●
-T───●
-M───●
+X ●───────
+Y ●───────
+Z ●───────
+H ●───────
+B ●───────
+T ●───────
+M ●───────
 `;
 }
 
-function orbitScan(){
+// ORBIT ASCII
+function orbit(){
 let a = Math.floor(Math.random()*360);
 return `
 ORBIT
@@ -36,7 +38,8 @@ Path : ●──○──●──○──●
 `;
 }
 
-function cubeScan(){
+// VECTORCUBE ASCII
+function cube(){
 return `
 VECTOR‑CUBE
 +-------+
@@ -47,7 +50,8 @@ VECTOR‑CUBE
 `;
 }
 
-function hyperScan(){
+// HYPERRAUM ASCII
+function hyper(){
 return `
 HYPERRAUM
 Cloud:
@@ -57,6 +61,7 @@ Cloud:
 `;
 }
 
+// AMIGA / ANIME ASCII
 function amigaAnime(){
 return `
 AMIGA‑SCENE / ANIME‑GLOW
@@ -68,10 +73,10 @@ GLOW: ON
 }
 
 document.getElementById("out").textContent =
-geoScan() +
-orbitScan() +
-cubeScan() +
-hyperScan() +
+geo3d() +
+orbit() +
+cube() +
+hyper() +
 amigaAnime();
 </script>
 
