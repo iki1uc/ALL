@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ALL · RUN7 · ALL3E · VISUAL · iki1uc</title>
+<title>ALL · RUN7 · VISUAL · GEO · ORBIT · VECTORCUBE</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:30px; }
@@ -12,25 +12,23 @@ pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre
 </style>
 
 <script type="module">
-import { ALL_RESPO } from "./ALL.respo.js";
-import { ALL_HYPERRAUM } from "./ALL.hyperraum.js";
-import { ALL_PIPELINE12 } from "./ALL.pipeline12.js";
-import { ALL_PORTAL, ALL_PORTALFUSION } from "./ALL.portal.js";
-import { ALL_VECTORCUBE } from "./ALL.vectorcube.js";
-import { ALL_ORBIT } from "./ALL.orbit.js";
-import { ALL_GEOMETRY } from "./ALL.geometry.js";
+import { ALL_GEO_VISUAL } from "./ALL.geometry.js";
+import { ALL_ORBIT_VISUAL } from "./ALL.orbit.js";
+import { ALL_VECTORCUBE_VISUAL } from "./ALL.vectorcube.js";
+import { ALL_HYPERRAUM_VISUAL } from "./ALL.hyperraum.js";
+import { ALL_PIPELINE12_VISUAL } from "./ALL.pipeline12.js";
 
 async function start(){
-    ALL_HYPERRAUM();
-    ALL_PIPELINE12();
-    ALL_PORTAL();
-    ALL_PORTALFUSION();
-    ALL_VECTORCUBE();
-    ALL_ORBIT();
-    ALL_GEOMETRY();
+    const out = {
+        GEO: ALL_GEO_VISUAL(),
+        ORBIT: ALL_ORBIT_VISUAL(),
+        VECTORCUBE: ALL_VECTORCUBE_VISUAL(),
+        HYPERRAUM: ALL_HYPERRAUM_VISUAL(),
+        PIPELINE12: ALL_PIPELINE12_VISUAL()
+    };
 
     document.getElementById("sys").innerText =
-        JSON.stringify(ALL_RESPO.get(), null, 2);
+        JSON.stringify(out, null, 2);
 }
 start();
 </script>
@@ -38,7 +36,7 @@ start();
 
 <body>
 
-<h1>ALL · RUN7 · ALL3E · VISUAL</h1>
+<h1>ALL · RUN7 · VISUAL</h1>
 
 <div class="block">
     <pre id="sys">Lade…</pre>
