@@ -7,9 +7,9 @@ export function ALL_VECTORCUBE(){
             right: "OK",
             top: "OK",
             bottom: "OK"
-        }
+        },
+        mode: "RUN6"
     };
-
     ALL_RESPO.add("vectorcube", out);
     return out;
 }
