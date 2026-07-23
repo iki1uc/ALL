@@ -2,13 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · Hyperraum · Cube-Mind · Portal-Fusion</title>
+<title>ALL · Hyperraum · 27 → 3×27 → 81 → 9×9 · QI/IQQ/OCTA</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
 h1 { color:#6cf; text-align:center; }
 
-.box { background:#111; padding:20px; margin:20px 0; border-left:3px solid #6cf; }
+.box {
+    background:#111;
+    padding:20px;
+    margin:20px 0;
+    border-left:3px solid #6cf;
+    overflow-x:auto;
+}
+
 .navItem { margin:4px; }
 .navCell { display:inline-block; width:40px; text-align:center; }
 
@@ -43,16 +50,18 @@ h1 { color:#6cf; text-align:center; }
 <script src="ALL.navigator.js"></script>
 <script src="ALL.vectorcube.js"></script>
 <script src="ALL.portalfusion.js"></script>
+<script src="9×9.js"></script>
 
 </head>
 
 <body>
 
-<h1>ALL · Hyperraum · Cube-Mind · Portal-Fusion</h1>
+<h1>ALL · Hyperraum · Cube-Mind · Portal-Fusion · 9×9</h1>
 
 <div class="box" id="navigator"></div>
 <div class="box" id="vectorcube"></div>
 <div class="box" id="portalfusion"></div>
+<div class="box" id="matrix9"></div>
 
 <script>
 const respo = [
@@ -68,11 +77,22 @@ const respo = [
     "RESPO_POSITION_USER"
 ];
 
+// Hyperraum erzeugen
 const hyper = ALL_HYPERRAUM.build(respo);
 
+// Navigator anzeigen
 ALL_NAVIGATOR.render(hyper);
+
+// Cube-Mind-Vektor-Animation anzeigen
 ALL_VECTORCUBE.animate(hyper.m27);
+
+// Portal-Fusion anzeigen
 ALL_PORTALFUSION.render(hyper.m27);
+
+// 9×9 anzeigen
+const m9 = AXIS81.build();
+document.getElementById("matrix9").innerText =
+    JSON.stringify(m9, null, 2);
 </script>
 
 </body>
