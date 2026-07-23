@@ -1,28 +1,18 @@
-# ANKER – Stabilisationsachse · iki1uc
+# ALL · Master-Schaltung · 9×9 QI/IQQ
 
-## Zweck
-ANKER ist die Stabilisationsachse des iki1uc‑Systems.
-Es hält die Achsen IQ, QI, EVO, UPD, UPG, BIOS und CALC im korrekten Verhältnis.
+ALL ist die Oberstation des iki1uc-Systems.
+Sie liefert die reine QI/IQQ-Schaltung für alle Module.
 
-## Struktur
-- NAME: ANKER
-- ID: A01
-- Station: S01
-- Dimension: D4
-- Modus: erabel (neutral, operation möglich)
+──────────────────────────────────────────────
+## Schaltung
 
-## Rolle
-ANKER stabilisiert, ohne selbst aktiv zu berechnen oder zu steuern.
-Es ist die neutrale Achse zwischen AXI, 6d und API.
+QI(r,c)  = r*9 + c  
+IQQ(r,c) = QI(r,c) mod 3  
+ALL(r,c) = IQQ(r,c)
 
-## Bindungen
-- AXI
-- 6d
-- 360
-- 100
-- 213 (REAL)
-- API
+──────────────────────────────────────────────
+## Dateien
 
-## Status
-STATE = STABIL  
-READY = 100%
+- ALL.core.js – Master-Engine
+- id.html – ALL-Stempel
+- index.html – ALL-Matrix
