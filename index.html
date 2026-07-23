@@ -2,17 +2,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · Master-Schaltung · 3×27 → 81</title>
+<title>ALL · Master-Schaltung · 27 → 3×27 → 81</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
 h1 { color:#6cf; text-align:center; }
 
-pre {
+.box {
     background:#111;
     padding:20px;
+    margin:20px 0;
     border-left:3px solid #6cf;
     overflow-x:auto;
+}
+
+.cell {
+    display:inline-block;
+    width:80px;
+    height:80px;
+    margin:4px;
+    border:1px solid #333;
+    text-align:center;
+    padding-top:20px;
+    font-size:12px;
 }
 </style>
 
@@ -24,29 +36,57 @@ pre {
 
 <h1>ALL · Master-Schaltung · Cube-Mind</h1>
 
-<pre id="status">Lade ALL…</pre>
+<div class="box" id="m27"></div>
+<div class="box" id="m3x27"></div>
+<div class="box" id="m81"></div>
 
 <script>
-// Deine RESPO-Liste
 const respo_list = [
     "RESPO_CORE_ROUTER",
     "RESPO_UI_STATUS",
-    "RESPO-MULTI-NORM",
-    "RESPO-Beam-Point",
-    "RESPO.Ort-LAGE",
-    "RESPO-Station",
-    "RESPO-Name",
+    "RESPO_MULTI_NORM",
+    "RESPO_BEAM_POINT",
+    "RESPO_ORT_LAGE",
+    "RESPO_STATION",
+    "RESPO_NAME",
     "RESPO_MODUL_LOOP",
     "RESPO_CODE_PIPELINE",
     "RESPO_POSITION_USER"
 ];
 
-// NEUE MASTER-FUNKTION
 const result = ALL.computeMaster(respo_list);
 
-// Ausgabe
-document.getElementById("status").innerText =
-    JSON.stringify(result, null, 2);
+// 27er
+document.getElementById("m27").innerHTML =
+    "<h2>27er-Bildung</h2>" +
+    result.m27.map(c =>
+        `<div class="cell" style="border-color:${c.color}">
+            ${c.name}<br>${c.score}%<br>${c.deg}°
+        </div>`
+    ).join("");
+
+// 3×27
+document.getElementById("m3x27").innerHTML =
+    "<h2>3×27-Bildung</h2>" +
+    result.m3x27.map((row,i)=>
+        `<h3>Stufe ${i+1}</h3>` +
+        row.map(c =>
+            `<div class="cell" style="border-color:${c.color}">
+                ${c.name}<br>${c.score}%<br>${c.deg}°
+            </div>`
+        ).join("")
+    ).join("");
+
+// 81er Cube-Mind
+document.getElementById("m81").innerHTML =
+    "<h2>81er Cube-Mind</h2>" +
+    result.m81.map(row =>
+        row.map(c =>
+            `<div class="cell" style="border-color:${c.color}">
+                ${c.name}<br>${c.score}%<br>${c.deg}°
+            </div>`
+        ).join("")
+    ).join("<br>");
 </script>
 
 </body>
