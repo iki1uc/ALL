@@ -2,66 +2,78 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · RUN7 · 3E · 6E · 6D · GEO3D · ORBIT · VECTORCUBE · HYPERRAUM</title>
+<title>ALL3E · ASCII‑SCAN · iki1uc</title>
 <style>
-body { margin:0; overflow:hidden; background:#000; }
+body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+pre { font-size:14px; line-height:16px; }
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
 
-<script type="module">
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js";
-import { GEO3D } from "./ALL.geo3d.js";
-import { ORBIT_ANIMATE } from "./ALL.orbit.animate.js";
-import { VECTORCUBE_ROTATE } from "./ALL.vectorcube.rotate.js";
-import { HYPERRAUM_RENDER } from "./ALL.hyperraum.render.js";
-import { ANIME_GLOW } from "./ALL.animeglow.js";
+<h2>ALL3E · ASCII‑SCAN</h2>
+<pre id="out">SCAN…</pre>
 
-const canvas = document.getElementById("c");
-const renderer = new THREE.WebGLRenderer({canvas});
-renderer.setSize(window.innerWidth,window.innerHeight);
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color("#000");
-
-const camera = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,100);
-camera.position.z = 5;
-
-// GEO 3D
-GEO3D(scene);
-
-// Cube
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color:"#0ff",wireframe:true})
-);
-scene.add(cube);
-
-// Hyperraum
-HYPERRAUM_RENDER(scene);
-
-// Orbit object
-const orb = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1),
-    new THREE.MeshBasicMaterial({color:"#ff0"})
-);
-scene.add(orb);
-
-// Animations
-const orbitAnim = ORBIT_ANIMATE(orb);
-const cubeAnim = VECTORCUBE_ROTATE(cube);
-
-// Anime Glow
-const composer = ANIME_GLOW(renderer,scene,camera);
-
-function animate(){
-    orbitAnim();
-    cubeAnim();
-    composer.render();
-    requestAnimationFrame(animate);
+<script>
+function geoScan(){
+return `
+GEO‑3D
+X───●
+Y───●
+Z───●
+H───●
+B───●
+T───●
+M───●
+`;
 }
-animate();
+
+function orbitScan(){
+let a = Math.floor(Math.random()*360);
+return `
+ORBIT
+Angle: ${a}°
+Path : ●──○──●──○──●
+`;
+}
+
+function cubeScan(){
+return `
+VECTOR‑CUBE
++-------+
+| ●   ● |
+|   ●   |
+| ●   ● |
++-------+
+`;
+}
+
+function hyperScan(){
+return `
+HYPERRAUM
+Cloud:
+● ● ●
+ ● ●
+  ●
+`;
+}
+
+function amigaAnime(){
+return `
+AMIGA‑SCENE / ANIME‑GLOW
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+░░░░░░░░░░░░░░░░░░░░░░
+SCANLINES ACTIVE
+GLOW: ON
+`;
+}
+
+document.getElementById("out").textContent =
+geoScan() +
+orbitScan() +
+cubeScan() +
+hyperScan() +
+amigaAnime();
 </script>
+
 </body>
 </html>
