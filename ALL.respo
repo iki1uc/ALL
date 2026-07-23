@@ -1,0 +1,13 @@
+export class ALL_RESPO {
+    constructor(){
+        this.state = {};
+    }
+
+    add(name, data){
+        this.state[name] = data;
+    }
+
+    get(){
+        return this.state;
+    }
+}
