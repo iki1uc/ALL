@@ -1,18 +1,21 @@
-# ALL · Master-Schaltung · 9×9 QI/IQQ
+# ALL · Master-Sortierer · iki1uc
 
 ALL ist die Oberstation des iki1uc-Systems.
-Sie liefert die reine QI/IQQ-Schaltung für alle Module.
+Sie erzeugt die QI/IQQ-Master-Matrix und sortiert alle RESPO-Module
+zu einer funktionalen Einheit.
 
 ──────────────────────────────────────────────
-## Schaltung
+## Funktionen
 
-QI(r,c)  = r*9 + c  
-IQQ(r,c) = QI(r,c) mod 3  
-ALL(r,c) = IQQ(r,c)
+- QI-Schaltung (Index)
+- IQQ-Schaltung (3-Zustände)
+- 9×9 Master-Matrix
+- Vorsortierung aller RESPO-Module
+- Einheitliche Basis für CUBE-MIND, META-CORE, 81×81
 
 ──────────────────────────────────────────────
 ## Dateien
 
-- ALL.core.js – Master-Engine
+- ALL.core.js – Masterengine
 - id.html – ALL-Stempel
-- index.html – ALL-Matrix
+- index.html – ALL-Matrix + Sortierung
