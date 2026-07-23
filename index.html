@@ -2,46 +2,60 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · Master-Schaltung · 27 → 3×27 → 81</title>
+<title>ALL · Hyperraum · Cube-Mind · Portal-Fusion</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
 h1 { color:#6cf; text-align:center; }
 
-.box {
-    background:#111;
-    padding:20px;
-    margin:20px 0;
-    border-left:3px solid #6cf;
-    overflow-x:auto;
-}
+.box { background:#111; padding:20px; margin:20px 0; border-left:3px solid #6cf; }
+.navItem { margin:4px; }
+.navCell { display:inline-block; width:40px; text-align:center; }
 
-.cell {
-    display:inline-block;
-    width:80px;
-    height:80px;
-    margin:4px;
-    border:1px solid #333;
-    text-align:center;
-    padding-top:20px;
-    font-size:12px;
+.cube {
+  width: 150px; height: 150px;
+  position: relative; margin: 40px auto;
+  transform-style: preserve-3d;
+  animation: spin 3s infinite linear;
+}
+.face {
+  position: absolute; width: 150px; height: 150px;
+  background:#111; border:2px solid #6cf;
+  text-align:center; padding-top:40px; font-size:14px;
+}
+.front  { transform: translateZ(75px); }
+.back   { transform: rotateY(180deg) translateZ(75px); }
+.left   { transform: rotateY(-90deg) translateZ(75px); }
+.right  { transform: rotateY(90deg) translateZ(75px); }
+.top    { transform: rotateX(90deg) translateZ(75px); }
+.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+@keyframes spin {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
 }
 </style>
 
 <script src="ALL.core.js"></script>
+<script src="ALL.geometry.js"></script>
+<script src="ALL.portal.js"></script>
+<script src="ALL.hyperraum.js"></script>
+<script src="ALL.navigator.js"></script>
+<script src="ALL.vectorcube.js"></script>
+<script src="ALL.portalfusion.js"></script>
 
 </head>
 
 <body>
 
-<h1>ALL · Master-Schaltung · Cube-Mind</h1>
+<h1>ALL · Hyperraum · Cube-Mind · Portal-Fusion</h1>
 
-<div class="box" id="m27"></div>
-<div class="box" id="m3x27"></div>
-<div class="box" id="m81"></div>
+<div class="box" id="navigator"></div>
+<div class="box" id="vectorcube"></div>
+<div class="box" id="portalfusion"></div>
 
 <script>
-const respo_list = [
+const respo = [
     "RESPO_CORE_ROUTER",
     "RESPO_UI_STATUS",
     "RESPO_MULTI_NORM",
@@ -54,39 +68,11 @@ const respo_list = [
     "RESPO_POSITION_USER"
 ];
 
-const result = ALL.computeMaster(respo_list);
+const hyper = ALL_HYPERRAUM.build(respo);
 
-// 27er
-document.getElementById("m27").innerHTML =
-    "<h2>27er-Bildung</h2>" +
-    result.m27.map(c =>
-        `<div class="cell" style="border-color:${c.color}">
-            ${c.name}<br>${c.score}%<br>${c.deg}°
-        </div>`
-    ).join("");
-
-// 3×27
-document.getElementById("m3x27").innerHTML =
-    "<h2>3×27-Bildung</h2>" +
-    result.m3x27.map((row,i)=>
-        `<h3>Stufe ${i+1}</h3>` +
-        row.map(c =>
-            `<div class="cell" style="border-color:${c.color}">
-                ${c.name}<br>${c.score}%<br>${c.deg}°
-            </div>`
-        ).join("")
-    ).join("");
-
-// 81er Cube-Mind
-document.getElementById("m81").innerHTML =
-    "<h2>81er Cube-Mind</h2>" +
-    result.m81.map(row =>
-        row.map(c =>
-            `<div class="cell" style="border-color:${c.color}">
-                ${c.name}<br>${c.score}%<br>${c.deg}°
-            </div>`
-        ).join("")
-    ).join("<br>");
+ALL_NAVIGATOR.render(hyper);
+ALL_VECTORCUBE.animate(hyper.m27);
+ALL_PORTALFUSION.render(hyper.m27);
 </script>
 
 </body>
