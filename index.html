@@ -8,21 +8,6 @@
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
 h1 { color:#6cf; text-align:center; }
 
-#cube {
-    width:360px;
-    height:360px;
-    margin:auto;
-    position:relative;
-}
-
-.cell {
-    width:30px;
-    height:30px;
-    background:#6cf;
-    border:1px solid #333;
-    position:absolute;
-}
-
 pre {
     background:#111;
     padding:20px;
@@ -38,23 +23,24 @@ pre {
 
 <h1>ALL · Master-Schaltung</h1>
 
-<div id="cube"></div>
 <pre id="status">Lade ALL…</pre>
 
 <script>
-const cube = document.getElementById("cube");
+const respo_list = [
+    "RESPO_CORE_ROUTER",
+    "RESPO_UI_STATUS",
+    "RESPO-MULTI-NORM",
+    "RESPO-Beam-Point",
+    "RESPO.Ort-LAGE",
+    "RESPO-Station",
+    "RESPO-Name",
+    "RESPO_MODUL_LOOP",
+    "RESPO_CODE_PIPELINE",
+    "RESPO_POSITION_USER"
+];
 
-for(let r=0; r<9; r++){
-    for(let c=0; c<9; c++){
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.style.left = (c*40)+"px";
-        cell.style.top  = (r*40)+"px";
-        cube.appendChild(cell);
-    }
-}
+const result = ALL.compute(respo_list);
 
-const result = ALL.build();
 document.getElementById("status").innerText =
     JSON.stringify(result, null, 2);
 </script>
