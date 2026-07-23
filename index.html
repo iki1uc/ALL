@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL · Hyperraum · 27 → 3×27 → 81 → 9×9 · QI/IQQ/OCTA</title>
+<title>ALL · ULTRA · Orbit · Pipeline12 · Hyperraum</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
@@ -16,30 +16,14 @@ h1 { color:#6cf; text-align:center; }
     overflow-x:auto;
 }
 
-.navItem { margin:4px; }
-.navCell { display:inline-block; width:40px; text-align:center; }
-
-.cube {
-  width: 150px; height: 150px;
-  position: relative; margin: 40px auto;
-  transform-style: preserve-3d;
-  animation: spin 3s infinite linear;
-}
-.face {
-  position: absolute; width: 150px; height: 150px;
-  background:#111; border:2px solid #6cf;
-  text-align:center; padding-top:40px; font-size:14px;
-}
-.front  { transform: translateZ(75px); }
-.back   { transform: rotateY(180deg) translateZ(75px); }
-.left   { transform: rotateY(-90deg) translateZ(75px); }
-.right  { transform: rotateY(90deg) translateZ(75px); }
-.top    { transform: rotateX(90deg) translateZ(75px); }
-.bottom { transform: rotateX(-90deg) translateZ(75px); }
-
-@keyframes spin {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
+.navCell {
+    display:inline-block;
+    width:40px;
+    height:40px;
+    text-align:center;
+    background:#111;
+    border:1px solid #333;
+    margin:2px;
 }
 </style>
 
@@ -50,18 +34,35 @@ h1 { color:#6cf; text-align:center; }
 <script src="ALL.navigator.js"></script>
 <script src="ALL.vectorcube.js"></script>
 <script src="ALL.portalfusion.js"></script>
+
+<script src="ALL.ultra.js"></script>
+<script src="ALL.orbit.js"></script>
+<script src="ALL.pipeline12.js"></script>
+
 <script src="9×9.js"></script>
+<script src="axes.js"></script>
+<script src="lage.js"></script>
+<script src="ghost.js"></script>
+<script src="respo_bridge.js"></script>
+<script src="tmp.js"></script>
+
+<script src="ultra.kernel.js"></script>
+<script src="cxr.orbit.js"></script>
+<script src="pipeline12.master.js"></script>
 
 </head>
 
 <body>
 
-<h1>ALL · Hyperraum · Cube-Mind · Portal-Fusion · 9×9</h1>
+<h1>ALL · ULTRA · Orbit · Pipeline12 · Hyperraum</h1>
 
 <div class="box" id="navigator"></div>
 <div class="box" id="vectorcube"></div>
 <div class="box" id="portalfusion"></div>
-<div class="box" id="matrix9"></div>
+
+<div class="box" id="allULTRA"></div>
+<div class="box" id="allORBIT"></div>
+<div class="box" id="allPIPE12"></div>
 
 <script>
 const respo = [
@@ -89,10 +90,17 @@ ALL_VECTORCUBE.animate(hyper.m27);
 // Portal-Fusion anzeigen
 ALL_PORTALFUSION.render(hyper.m27);
 
-// 9×9 anzeigen
-const m9 = AXIS81.build();
-document.getElementById("matrix9").innerText =
-    JSON.stringify(m9, null, 2);
+// ULTRA-Kernel starten
+const matrix = ULTRA_KERNEL.start();
+ALL_ULTRA.receive9hoch9(matrix);
+
+// Orbit-Engine starten
+const orbit = CXR_ORBIT.start(matrix);
+ALL_ORBIT.receiveOrbit(orbit);
+
+// Pipeline12 starten
+const pipe12 = PIPELINE12_MASTER.start(matrix);
+ALL_PIPE12.receivePipeline12(pipe12);
 </script>
 
 </body>
