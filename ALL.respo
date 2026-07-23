@@ -1,13 +1,14 @@
-export class ALL_RESPO {
-    constructor(){
-        this.state = {};
-    }
-
-    add(name, data){
-        this.state[name] = data;
-    }
-
+export const ALL_RESPO = {
+    core: {},
+    hyperraum: {},
+    pipeline12: {},
+    portal: {},
+    fusion: {},
+    vectorcube: {},
+    add(section, data){
+        this[section] = data;
+    },
     get(){
-        return this.state;
+        return this;
     }
-}
+};
