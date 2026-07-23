@@ -5,6 +5,7 @@ export const ALL_RESPO = {
     portal: {},
     fusion: {},
     vectorcube: {},
+    orbit: {},
     add(section, data){
         this[section] = data;
     },
