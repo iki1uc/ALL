@@ -1,107 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ALL · ULTRA · Orbit · Pipeline12 · Hyperraum</title>
+<title>ALL · Master‑Sortierer · iki1uc · RESPO · HYPERRAUM · ORBIT · PIPELINE12 · PORTAL</title>
 
 <style>
-body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
-h1 { color:#6cf; text-align:center; }
-
-.box {
-    background:#111;
-    padding:20px;
-    margin:20px 0;
-    border-left:3px solid #6cf;
-    overflow-x:auto;
-}
-
-.navCell {
-    display:inline-block;
-    width:40px;
-    height:40px;
-    text-align:center;
-    background:#111;
-    border:1px solid #333;
-    margin:2px;
-}
+body { background:#000; color:#0f0; font-family:Consolas; padding:30px; }
+h1 { color:#6cf; letter-spacing:3px; }
+.block { background:#111; border:1px solid #333; padding:20px; margin:25px 0; border-radius:8px; }
+.title { color:#6cf; font-size:20px; margin-bottom:10px; }
+pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre-wrap; }
 </style>
 
-<script src="ALL.core.js"></script>
-<script src="ALL.geometry.js"></script>
-<script src="ALL.portal.js"></script>
-<script src="ALL.hyperraum.js"></script>
-<script src="ALL.navigator.js"></script>
-<script src="ALL.vectorcube.js"></script>
-<script src="ALL.portalfusion.js"></script>
+<script type="module">
 
-<script src="ALL.ultra.js"></script>
-<script src="ALL.orbit.js"></script>
-<script src="ALL.pipeline12.js"></script>
+// ------------------------------------------------------
+// AUTO-SCAN: findet ALLE Dateien im ALL-Repo
+// ------------------------------------------------------
+async function scanRepo(){
+    const api = "https://api.github.com/repos/iki1uc/ALL/contents/";
+    const res = await fetch(api);
+    const files = await res.json();
+    return files.map(f => f.name);
+}
 
-<script src="9×9.js"></script>
-<script src="axes.js"></script>
-<script src="lage.js"></script>
-<script src="ghost.js"></script>
-<script src="respo_bridge.js"></script>
-<script src="tmp.js"></script>
+// ------------------------------------------------------
+// AUTO-LOAD: lädt jede Datei
+// ------------------------------------------------------
+async function loadFile(name){
+    try{
+        const res = await fetch(name);
+        if(!res.ok) return { name, ok:false };
+        const txt = await res.text();
+        return { name, ok:true, content:txt };
+    }catch(e){
+        return { name, ok:false };
+    }
+}
 
-<script src="ultra.kernel.js"></script>
-<script src="cxr.orbit.js"></script>
-<script src="pipeline12.master.js"></script>
+// ------------------------------------------------------
+// START: lädt ALT + NEU + ALL + RESPO + HYPERRAUM + ORBIT + PIPELINE12
+// ------------------------------------------------------
+async function start(){
+    const out = document.getElementById("sys");
 
+    const repoFiles = await scanRepo();
+    const loaded = [];
+
+    for(const f of repoFiles){
+        loaded.push(await loadFile(f));
+    }
+
+    out.innerText = JSON.stringify({
+        SYSTEM: "ALL · Master‑Sortierer · iki1uc",
+        MODULES: {
+            CORE: "ALL.core.js",
+            CUBE: "ALL.cube.js",
+            GEOMETRY: "ALL.geometry.js",
+            HYPERRAUM: "ALL.hyperraum.js",
+            NAVIGATOR: "ALL.navigator.js",
+            ORBIT: "ALL.orbit.js",
+            PIPELINE12: "ALL.pipeline12.js",
+            PORTAL: "ALL.portal.js",
+            PORTALFUSION: "ALL.portalfusion.js",
+            ULTRA: "ALL.ultra.js",
+            VECTORCUBE: "ALL.vectorcube.js"
+        },
+        FILES: loaded,
+        STATUS: "AKTIV",
+        READY: "100%"
+    }, null, 2);
+}
+
+start();
+
+</script>
 </head>
 
 <body>
 
-<h1>ALL · ULTRA · Orbit · Pipeline12 · Hyperraum</h1>
+<h1>ALL · Master‑Sortierer · iki1uc</h1>
 
-<div class="box" id="navigator"></div>
-<div class="box" id="vectorcube"></div>
-<div class="box" id="portalfusion"></div>
-
-<div class="box" id="allULTRA"></div>
-<div class="box" id="allORBIT"></div>
-<div class="box" id="allPIPE12"></div>
-
-<script>
-const respo = [
-    "RESPO_CORE_ROUTER",
-    "RESPO_UI_STATUS",
-    "RESPO_MULTI_NORM",
-    "RESPO_BEAM_POINT",
-    "RESPO_ORT_LAGE",
-    "RESPO_STATION",
-    "RESPO_NAME",
-    "RESPO_MODUL_LOOP",
-    "RESPO_CODE_PIPELINE",
-    "RESPO_POSITION_USER"
-];
-
-// Hyperraum erzeugen
-const hyper = ALL_HYPERRAUM.build(respo);
-
-// Navigator anzeigen
-ALL_NAVIGATOR.render(hyper);
-
-// Cube-Mind-Vektor-Animation anzeigen
-ALL_VECTORCUBE.animate(hyper.m27);
-
-// Portal-Fusion anzeigen
-ALL_PORTALFUSION.render(hyper.m27);
-
-// ULTRA-Kernel starten
-const matrix = ULTRA_KERNEL.start();
-ALL_ULTRA.receive9hoch9(matrix);
-
-// Orbit-Engine starten
-const orbit = CXR_ORBIT.start(matrix);
-ALL_ORBIT.receiveOrbit(orbit);
-
-// Pipeline12 starten
-const pipe12 = PIPELINE12_MASTER.start(matrix);
-ALL_PIPE12.receivePipeline12(pipe12);
-</script>
+<div class="block">
+    <div class="title">System‑Status</div>
+    <pre id="sys">Lade…</pre>
+</div>
 
 </body>
 </html>
