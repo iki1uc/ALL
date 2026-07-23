@@ -7,9 +7,9 @@ class ALL_HYPERRAUM {
         const m27 = portal;
 
         const m3x27 = [
-            m27.map(c => ({...c, score: (c.score*2)%100})),
-            m27.map(c => ({...c, score: (c.score*3)%100})),
-            m27.map(c => ({...c, score: (c.score*4)%100}))
+            m27.map(c => ({...c, score: (c.score*1.2)%100})),
+            m27.map(c => ({...c, score: (c.score*1.5)%100})),
+            m27.map(c => ({...c, score: (c.score*1.8)%100}))
         ];
 
         const m81 = [];
@@ -19,8 +19,8 @@ class ALL_HYPERRAUM {
                 const base = m27[(r*9+c)%27];
                 row.push({
                     ...base,
-                    score: (base.score + r + c) % 100,
-                    deg: (base.deg + r*10 + c*5) % 360
+                    score: (base.score + r*3 + c*2) % 100,
+                    deg: (base.deg + r*15 + c*10) % 360
                 });
             }
             m81.push(row);
