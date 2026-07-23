@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ALL6E · ASCII‑SCENE · iki1uc</title>
+<title>ALL381 · RUN7 · ASCII‑ANIMATION</title>
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
 pre { font-size:15px; line-height:17px; }
@@ -10,91 +10,69 @@ pre { font-size:15px; line-height:17px; }
 </head>
 <body>
 
-<h2>ALL6E · ASCII‑SCENE</h2>
-<pre id="out">SCAN…</pre>
+<h2>ALL381 · RUN7 · ASCII‑ANIMATION</h2>
+<pre id="screen">START…</pre>
 
 <script>
-// GEO 6D ASCII
-function geo6d(){
-return `
-GEO‑6D
-X───●───────
-Y───●───────
-Z───●───────
-H───●───────
-B───●───────
-T───●───────
-M───●───────
-Q───●───────
-`;
-}
+let frame = 0;
 
-// ORBIT SPIRAL ASCII
-function orbitSpiral(){
-let a = Math.floor(Math.random()*360);
-return `
+function anim(){
+    frame++;
+
+    // GEO 3D rotation effect
+    const geo = `
+GEO‑3D (rot ${frame})
+X───${frame%2? "●":"○"}
+Y───${frame%3? "●":"○"}
+Z───${frame%4? "●":"○"}
+H───${frame%5? "●":"○"}
+B───${frame%6? "●":"○"}
+T───${frame%7? "●":"○"}
+M───${frame%8? "●":"○"}
+`;
+
+    // ORBIT spiral animation
+    const orbit = `
 ORBIT‑SPIRAL
-Angle: ${a}°
+Angle: ${frame*7 % 360}°
 Path :
-●──○──●──○──●──○──●
+${"●".repeat((frame%5)+1)}──○──${"●".repeat((frame%3)+1)}
    ↘
-     ●──○──●──○──●
+     ${"●".repeat((frame%4)+1)}──○──${"●".repeat((frame%2)+1)}
 `;
-}
 
-// VECTOR‑CUBE SHIFT ASCII
-function cubeShift(){
-return `
-VECTOR‑CUBE‑SHIFT
+    // VECTOR‑CUBE rotation
+    const cube = `
+VECTOR‑CUBE‑ROT
 +-------+
-| ●   ● |
-|   ●   |
-| ●   ● |
+| ${frame%2?"●":"○"}   ${frame%3?"●":"○"} |
+|   ${frame%4?"●":"○"}   |
+| ${frame%5?"●":"○"}   ${frame%6?"●":"○"} |
 +-------+
-Shift: →→
+rot: ${frame}
 `;
-}
 
-// HYPERRAUM CLOUD ASCII
-function hyperCloud(){
-return `
+    // HYPERRAUM cloud pulse
+    const hyper = `
 HYPERRAUM‑CLOUD
-● ● ● ● ●
- ● ● ● ●
-  ● ● ●
-   ● ●
-    ●
+${"● ".repeat((frame%6)+3)}
+ ${"● ".repeat((frame%5)+2)}
+  ${"● ".repeat((frame%4)+1)}
 `;
-}
 
-// AMIGA COPPERBARS ASCII
-function amigaBars(){
-return `
+    // AMIGA copperbars
+    const amiga = `
 AMIGA‑COPPERBARS
-██████████████████
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-██████████████████
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+${"█".repeat(20)}
+${"▓".repeat(20)}
+${"█".repeat(20)}
+${"▓".repeat(20)}
 `;
-}
 
-// ANIME SPARKS ASCII
-function animeSparks(){
-return `
+    // ANIME sparks
+    const anime = `
 ANIME‑SPARKS
-✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧
-  ✧ ✦ ✧ ✦ ✧ ✦ ✧
+${frame%2? "✦ ✧ ✦ ✧ ✦":"✧ ✦ ✧ ✦ ✧"}
 `;
-}
 
-document.getElementById("out").textContent =
-geo6d() +
-orbitSpiral() +
-cubeShift() +
-hyperCloud() +
-amigaBars() +
-animeSparks();
-</script>
-
-</body>
-</html>
+    document.getElementById("screen").textContent =
