@@ -2,87 +2,42 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ALL · Master‑Sortierer · iki1uc · RESPO · HYPERRAUM · ORBIT · PIPELINE12 · PORTAL</title>
+<title>ALL · iki1uc · RESPO · Hyperraum · Pipeline12 · Portal · Fusion · VectorCube</title>
 
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:30px; }
-h1 { color:#6cf; letter-spacing:3px; }
+h1 { color:#6cf; }
 .block { background:#111; border:1px solid #333; padding:20px; margin:25px 0; border-radius:8px; }
-.title { color:#6cf; font-size:20px; margin-bottom:10px; }
 pre { background:#000; border-left:3px solid #6cf; padding:15px; white-space:pre-wrap; }
 </style>
 
 <script type="module">
+import { ALL_RESPO } from "./ALL.respo.js";
+import { ALL_HYPERRAUM } from "./ALL.hyperraum.js";
+import { ALL_PIPELINE12 } from "./ALL.pipeline12.js";
+import { ALL_PORTAL, ALL_PORTALFUSION } from "./ALL.portal.js";
+import { ALL_VECTORCUBE } from "./ALL.vectorcube.js";
 
-// ------------------------------------------------------
-// AUTO-SCAN: findet ALLE Dateien im ALL-Repo
-// ------------------------------------------------------
-async function scanRepo(){
-    const api = "https://api.github.com/repos/iki1uc/ALL/contents/";
-    const res = await fetch(api);
-    const files = await res.json();
-    return files.map(f => f.name);
-}
-
-// ------------------------------------------------------
-// AUTO-LOAD: lädt jede Datei
-// ------------------------------------------------------
-async function loadFile(name){
-    try{
-        const res = await fetch(name);
-        if(!res.ok) return { name, ok:false };
-        const txt = await res.text();
-        return { name, ok:true, content:txt };
-    }catch(e){
-        return { name, ok:false };
-    }
-}
-
-// ------------------------------------------------------
-// START: lädt ALT + NEU + ALL + RESPO + HYPERRAUM + ORBIT + PIPELINE12
-// ------------------------------------------------------
 async function start(){
-    const out = document.getElementById("sys");
+    ALL_HYPERRAUM();
+    ALL_PIPELINE12();
+    ALL_PORTAL();
+    ALL_PORTALFUSION();
+    ALL_VECTORCUBE();
 
-    const repoFiles = await scanRepo();
-    const loaded = [];
-
-    for(const f of repoFiles){
-        loaded.push(await loadFile(f));
-    }
-
-    out.innerText = JSON.stringify({
-        SYSTEM: "ALL · Master‑Sortierer · iki1uc",
-        MODULES: {
-            CORE: "ALL.core.js",
-            CUBE: "ALL.cube.js",
-            GEOMETRY: "ALL.geometry.js",
-            HYPERRAUM: "ALL.hyperraum.js",
-            NAVIGATOR: "ALL.navigator.js",
-            ORBIT: "ALL.orbit.js",
-            PIPELINE12: "ALL.pipeline12.js",
-            PORTAL: "ALL.portal.js",
-            PORTALFUSION: "ALL.portalfusion.js",
-            ULTRA: "ALL.ultra.js",
-            VECTORCUBE: "ALL.vectorcube.js"
-        },
-        FILES: loaded,
-        STATUS: "AKTIV",
-        READY: "100%"
-    }, null, 2);
+    document.getElementById("sys").innerText =
+        JSON.stringify(ALL_RESPO.get(), null, 2);
 }
 
 start();
-
 </script>
 </head>
 
 <body>
 
-<h1>ALL · Master‑Sortierer · iki1uc</h1>
+<h1>ALL · iki1uc · RESPO‑System</h1>
 
 <div class="block">
-    <div class="title">System‑Status</div>
     <pre id="sys">Lade…</pre>
 </div>
 
